@@ -1,0 +1,237 @@
+{% extends 'startpage/base.html' %}
+{% load static %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block css %}
+{#    <link rel="stylesheet" href="{% static 'nicepage2.css' %}" media="screen">#}
+    <link rel="stylesheet" href="{% static 'nicepage.css' %}" media="screen">
+    <style>
+    .u-dropdown button {
+      padding: 10px 20px;
+    }
+
+    .u-dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    .u-dropdown-content a {
+      display: block;
+      padding: 12px 16px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .u-dropdown-content a:hover {
+      background-color: #f2f2f2;
+    }
+
+    .u-dropdown:hover .u-dropdown-content {
+      display: block;
+    }
+
+    .container {
+      display: flex;
+      justify-content: flex-start;
+    }
+    .scrollable-modal-body {
+        max-height: calc(100vh - 210px);
+        overflow-y: auto;
+    }
+    .my-table {
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    .quantity-cell {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .button-minus,
+    .button-plus {
+        display: inline-block;
+        padding: 5px;
+        border: 1px solid #ddd;
+        cursor: pointer;
+    }
+
+    .button-minus:hover,
+    .button-plus:hover {
+        background-color: #f5f5f5;
+    }
+    .my-table {
+    margin: auto;
+    }
+
+    .quantity-cell {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .btn-danger,
+    .btn-success {
+        margin-top: 10px;
+    }
+
+
+    </style>
+{% endblock %}
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <div class="container">
+      <div class="row justify-content-center mt-5 flex-row">
+        <div class="col">
+          <img src="{% static '1647726000_2-amiel-club-p-kartinki-supa-2.jpg' %}" class="img-fluid" data-toggle="modal" data-target="#soupModal">
+        </div>
+        <div class="col">
+          <img src="{% static '10-shikarnyh-goryachih-blyud-na-noviy-god.jpg' %}" class="img-fluid" data-toggle="modal" data-target="#mainDishModal">
+        </div>
+        <div class="col">
+          <img src="{% static 'salat_sushi-555028.jpg' %}" class="img-fluid" data-toggle="modal" data-target="#saladModal">
+        </div>
+      </div>
+    </div>
+
+    <!-- Soup Modal -->
+    <div class="modal fade" id="soupModal" tabindex="-1" role="dialog" aria-labelledby="soupModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="soupModalLabel">Супы</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body scrollable-modal-body">
+              {% for item in product %}
+                {% if item.category.name == 'супы' %}
+                   <div class="card">
+                        <div class="card-body">
+                            <img src="{{ item.productimage_set.first.image.url }}" alt="{{ item.name }} Image" class="card-img-top">
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <p class="card-text">Price: {{ item.price }}</p>
+                            <a href="{% url 'startpage:basket_add_item' item.id %}" class="btn btn-primary">Добавить в корзину</a>
+                        </div>
+                   </div>
+                {% endif %}
+              {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Dish Modal -->
+    <div class="modal fade" id="mainDishModal" tabindex="-1" role="dialog" aria-labelledby="mainDishModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="mainDishModalLabel">Вторые блюда</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body scrollable-modal-body">
+              {% for item in product %}
+                {% if item.category.name == 'горячее' %}
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="{{ item.productimage_set.first.image.url }}" alt="{{ item.name }} Image" class="card-img-top">
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <p class="card-text">Price: {{ item.price }}</p>
+                            <a href="{% url 'startpage:basket_add_item' item.id %}" class="btn btn-primary">Добавить в корзину</a>
+                        </div>
+                    </div>
+                {% endif %}
+              {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Salad Modal -->
+    <div class="modal fade" id="saladModal" tabindex="-1" role="dialog" aria-labelledby="saladModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="saladModalLabel">Салаты</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body scrollable-modal-body">
+              {% for item in product %}
+                {% if item.category.name == 'салаты' %}
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="{{ item.productimage_set.first.image.url }}" alt="{{ item.name }} Image" class="card-img-top">
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <p class="card-text">Price: {{ item.price }}</p>
+                            <a href="{% url 'startpage:basket_add_item' item.id %}" class="btn btn-primary">Добавить в корзину</a>
+                        </div>
+                    </div>
+                {% endif %}
+              {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="container mt-5">
+    <h2>Заказ: </h2>
+    <div id="orderDetails">
+        <div class="custom-expanded">
+            <div class="container">
+                <table class="table my-table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for basket in baskets %}
+                            <tr>
+                                <td>{{ basket.product.name }}</td>
+                                <td class="quantity-cell">
+                                    <a href="{% url 'startpage:basket_rem_item' basket.product.id %}" class="btn btn-sm btn-danger">-</a>
+                                    <span>{{ basket.quantity }}</span>
+                                    <a href="{% url 'startpage:basket_add_item' basket.product.id %}" class="btn btn-sm btn-success">+</a>
+                                </td>
+                                <td>{{ basket.total }}</td>
+                            </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="u-container-style u-layout-cell u-size-40 u-layout-cell-2">
+                    <div class="u-container-layout u-container-layout-2">
+                        <h6 class="u-text u-text-default u-text-1">Общая сумма: {{ baskets.total_sum }}</h6>
+                        <a href="{% url 'startpage:basket_rem' %}" class="btn btn-danger">Clear Basket</a>
+                    </div>
+                </div>
+                <div class="u-container-style u-layout-cell u-size-40 u-layout-cell-2">
+                    <div class="u-container-layout u-container-layout-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'startpage:orders' %}">
+        <button type="button" class="btn btn-success mt-3">Оформить заказ</button>
+    </a>
+</div>
+    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

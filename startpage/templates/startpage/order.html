@@ -1,0 +1,55 @@
+{% extends 'startpage\base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'nicepage.css' %}" media="screen">
+    <style>
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        text-decoration: none;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    <br>
+    <br>
+    <section class="u-align-center u-clearfix u-section-2" id="sec-171d">
+      <div class="u-clearfix u-sheet u-sheet-1">
+          <p class="u-text u-text-default u-text-1">
+            <p style="alignment-baseline: auto">
+              Заказал: {{ order.user.username }}</p>
+          Продукты:
+              {% for bas in order.basket_set.all %}
+                  <p style="alignment-baseline: auto">{{ bas.product.name }}</p>
+              {% endfor %}
+              </p>
+               <p style="alignment-baseline: auto">
+                  {{ order.basket_set.product.name }}</p>
+               <p style="alignment-baseline: auto">
+                  Общая стоимость: {{ order.total_sum }}</p>
+                {% if delivery %}
+                    <p style="alignment-baseline: auto">
+                      Цена доставки: {{ delivery.price }}</p>
+                {% endif %}
+
+
+
+    </section>
+    <section class="u-align-center u-clearfix u-section-2" id="sec-171d">
+      <div class="u-clearfix u-sheet u-sheet-1">
+          <form action="{% url 'startpage:order' order.id %}" method="post">
+              {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="btn btn-primary" value="применить">
+          </form>
+        <a href="/your-target-page" class="btn">Go to Another Page</a>
+    </section>
+{% endblock %}

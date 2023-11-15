@@ -1,0 +1,90 @@
+{% extends 'startpage\base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'nicepage.css' %}" media="screen">
+{% endblock %}
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <section class="u-align-center u-clearfix u-section-2" id="sec-171d">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="custom-expanded u-table u-table-responsive u-table-1">
+            <div class="container">
+              <table class="u-align-center u-table-entity u-table-entity-1" style="margin-left: auto; margin-right: auto;">
+                <colgroup>
+                  <col width="25%">
+                  <col width="25.4%">
+                  <col width="24.6%">
+                  <col width="25%">
+                </colgroup>
+                <thead class="u-grey-50 u-table-header u-table-header-1">
+                  <tr style="height: 44px;">
+                    <th class="u-border-1 u-border-grey-50 u-table-cell">product</th>
+                    <th class="u-border-1 u-border-grey-50 u-table-cell">quantity</th>
+                    <th class="u-border-1 u-border-grey-50 u-table-cell">price</th>
+                    <th class="u-border-1 u-border-grey-50 u-table-cell">action</th>
+                  </tr>
+                </thead>
+                <tbody class="u-table-body">
+                {% for basket in baskets %}
+                    <tr style="height: 44px;">
+                    <td class="u-border-1 u-border-grey-40 u-border-no-left u-border-no-right u-table-cell">{{ basket.product.name }}</td>
+                    <td class="u-border-1 u-border-grey-40 u-border-no-left u-border-no-right u-table-cell">
+                        <a href="{% url 'startpage:basket_rem_item' basket.product.id %}" class="button-minus">-</a>
+
+                            <span>{{ basket.quantity }}</span>
+
+                        <a href="{% url 'startpage:basket_add_item' basket.product.id %}" class="button-plus">+</a>
+                    </td>
+                    <td class="u-border-1 u-border-grey-40 u-border-no-left u-border-no-right u-table-cell">{{ basket.total }}</td>
+                    <td class="u-border-1 u-border-grey-40 u-border-no-left u-border-no-right u-table-cell">Description</td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+                <div class="u-container-style u-layout-cell u-size-40 u-layout-cell-2">
+                  <div class="u-container-layout u-container-layout-2">
+                      <h6 class="u-text u-text-default u-text-1">Общая сумма: {{ baskets.total_sum }}</h6>
+                    <a href="https://nicepage.app" class="u-active-none u-border-5 u-border-active-palette-2-dark-1 u-border-hover-black u-border-no-left u-border-no-right u-border-no-top
+                    u-border-palette-1-base u-btn u-button-style u-hover-none u-none u-text-body-color u-btn-1">Ссылка</a>
+                    <a href="{% url 'startpage:basket_rem' %}" class="u-active-none u-border-5 u-border-active-palette-2-dark-1 u-border-hover-black u-border-no-left u-border-no-right u-border-no-top
+                    u-border-palette-1-base u-btn u-button-style u-hover-none u-none u-text-body-color u-btn-1">Очистить корзину</a>
+                  </div>
+                </div>
+                <div class="u-container-style u-layout-cell u-size-40 u-layout-cell-2">
+                    <div class="u-container-layout u-container-layout-2">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+{#        <section class="u-clearfix u-section-3" id="sec-9b01">#}
+{#          <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">#}
+{#            <div class="u-layout">#}
+{#              <div class="u-layout-row">#}
+{#                <div class="u-container-style u-layout-cell u-size-5 u-layout-cell-1">#}
+{#                  <div class="u-container-layout u-container-layout-1"></div>#}
+{#                </div>#}
+{#                <div class="u-container-style u-layout-cell u-size-49 u-layout-cell-2">#}
+{#                  <div class="u-container-layout u-container-layout-2"></div>#}
+{#                </div>#}
+{#                <div class="u-container-style u-layout-cell u-size-6 u-layout-cell-3">#}
+{#                  <div class="u-container-layout u-container-layout-3"></div>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </section>#}
+{#        </div>#}
+{#    </footer>#}
+
+{% endblock %}
